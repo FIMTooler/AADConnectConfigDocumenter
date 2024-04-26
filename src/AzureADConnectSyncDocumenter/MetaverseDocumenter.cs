@@ -370,11 +370,14 @@ namespace AzureADConnectConfigDocumenter
 
                         Logger.Instance.WriteVerbose("Processing Sync Rule Info for Connector: '{0}'. Sync Rule: '{1}'.", connectorName, inboundSyncRuleName);
 
+                        //Expression
                         var mappingExpression = (string)syncRule.XPathSelectElement("attribute-mappings/mapping[dest = '" + metaverseAttribute + "']/expression");
+                        //Direct
                         var mappingSourceAttribute = (string)syncRule.XPathSelectElement("attribute-mappings/mapping[dest = '" + metaverseAttribute + "']/src/attr");
+                        //Constant
                         var mappingSource = (string)syncRule.XPathSelectElement("attribute-mappings/mapping[dest = '" + metaverseAttribute + "']/src");
                         string inboundExpression = (string)mappingExpression ?? (string)mappingSourceAttribute ?? (string)mappingSource ?? "??";
-                        string inboundFlowType = !string.IsNullOrEmpty(mappingExpression) ? "Expression" : "Direct";
+                        string inboundFlowType = !string.IsNullOrEmpty(mappingExpression) ? "Expression" : !string.IsNullOrEmpty(mappingSourceAttribute) ? "Direct" : "Constant";
 
 
                         Logger.Instance.WriteVerbose("Processed Sync Rule Info for Connector: '{0}'. Sync Rule: '{1}'.", connectorName, inboundSyncRuleName);
