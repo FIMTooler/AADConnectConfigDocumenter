@@ -1488,11 +1488,14 @@ namespace AzureADConnectConfigDocumenter
                                 ++inboundSyncRuleRank;
 
                                 var transformation = inboundSyncRules.ElementAt(i).XPathSelectElement("./attribute-mappings/mapping[dest = '" + metaverseAttribute + "']");
+                                //Expression
                                 expression = (string)transformation.Element("expression");
+                                //Direct
                                 srcAttribute = (string)transformation.XPathSelectElement("src/attr");
+                                //Constant
                                 var src = (string)transformation.XPathSelectElement("src");
                                 inboundExpression = !string.IsNullOrEmpty(expression) ? expression : !string.IsNullOrEmpty(srcAttribute) ? srcAttribute : src;
-                                inboundFlowType = !string.IsNullOrEmpty(expression) ? "Expression" : "Direct";
+                                inboundFlowType = !string.IsNullOrEmpty(expression) ? "Expression" : !string.IsNullOrEmpty(srcAttribute) ? "Direct" : "Constant";
 
                                 var inboundSyncRuleScopingConditions = inboundSyncRules.ElementAt(i).XPathSelectElements("./synchronizationCriteria/conditions");
                                 var inboundSyncRuleScopingConditionsCount = inboundSyncRuleScopingConditions.Count();
@@ -2003,11 +2006,14 @@ namespace AzureADConnectConfigDocumenter
                                     string s = "";
                                 }
                                 var transformation = inboundSyncRules.ElementAt(i).XPathSelectElement("./attribute-mappings/mapping[dest = '" + metaverseAttribute + "']");
+                                //Expression
                                 expression = (string)transformation.Element("expression");
+                                //Direct
                                 srcAttribute = (string)transformation.XPathSelectElement("src/attr");
+                                //Constant
                                 var src = (string)transformation.XPathSelectElement("src");
                                 inboundExpression = !string.IsNullOrEmpty(expression) ? expression : !string.IsNullOrEmpty(srcAttribute) ? srcAttribute : src;
-                                inboundFlowType = !string.IsNullOrEmpty(expression) ? "Expression" : "Direct";
+                                inboundFlowType = !string.IsNullOrEmpty(expression) ? "Expression" : !string.IsNullOrEmpty(srcAttribute) ? "Direct" : "Constant";
 
                                 var inboundSyncRuleScopingConditions = inboundSyncRules.ElementAt(i).XPathSelectElements("./synchronizationCriteria/conditions");
                                 var inboundSyncRuleScopingConditionsCount = inboundSyncRuleScopingConditions.Count();
